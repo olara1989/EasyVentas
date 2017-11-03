@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="541e90ff-4fa3-4228-8c59-455e651672cf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     tiket.`id` AS tiket_id,
+     tiket.`titulo` AS tiket_titulo,
+     tiket.`eslogan` AS tiket_eslogan,
+     tiket.`lugar` AS tiket_lugar,
+     tiket.`rfc` AS tiket_rfc,
+     tiket.`regimen` AS tiket_regimen,
+     tiket.`final` AS tiket_final,
+     tiket.`img` AS tiket_img,
+     cotizaciones.`id` AS cotizaciones_id,
+     cotizaciones.`producto` AS cotizaciones_producto,
+     cotizaciones.`cantidad` AS cotizaciones_cantidad,
+     cotizaciones.`precio` AS cotizaciones_precio,
+     cotizaciones.`subtotal` AS cotizaciones_subtotal,
+     cotizaciones.`cliente` AS cotizaciones_cliente,
+     cotizaciones.`fecha` AS cotizaciones_fecha
+FROM
+     `tiket` tiket,
+     `cotizaciones` cotizaciones
+Where
+     cotizaciones.fecha = (SELECT MAX(cotizaciones.fecha) FROM cotizaciones)]]>
+	</queryString>
+	<field name="tiket_id" class="java.lang.Integer"/>
+	<field name="tiket_titulo" class="java.lang.String"/>
+	<field name="tiket_eslogan" class="java.lang.String"/>
+	<field name="tiket_lugar" class="java.lang.String"/>
+	<field name="tiket_rfc" class="java.lang.String"/>
+	<field name="tiket_regimen" class="java.lang.String"/>
+	<field name="tiket_final" class="java.lang.String"/>
+	<field name="tiket_img" class="java.lang.String"/>
+	<field name="cotizaciones_id" class="java.lang.Integer"/>
+	<field name="cotizaciones_producto" class="java.lang.String"/>
+	<field name="cotizaciones_cantidad" class="java.math.BigDecimal"/>
+	<field name="cotizaciones_precio" class="java.math.BigDecimal"/>
+	<field name="cotizaciones_subtotal" class="java.math.BigDecimal"/>
+	<field name="cotizaciones_cliente" class="java.lang.String"/>
+	<field name="cotizaciones_fecha" class="java.sql.Timestamp"/>
+	<variable name="cotizaciones_subtotal_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{cotizaciones_subtotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band height="802" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="-12" y="151" width="578" height="612" uuid="0e81f735-8830-4e0f-8b2f-73fc5d17313a"/>
+			</rectangle>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="149" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="-12" y="-11" width="578" height="159" uuid="0e81f735-8830-4e0f-8b2f-73fc5d17313a"/>
+			</rectangle>
+			<image>
+				<reportElement x="414" y="0" width="141" height="119" uuid="5e970b95-4c38-49d1-88e4-a61e8d8128e0"/>
+				<imageExpression><![CDATA[$F{tiket_img}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="175" y="25" width="239" height="87" forecolor="#006666" uuid="27cdd353-bef3-458f-9bd8-d065813938df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tiket_titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="32" width="175" height="20" uuid="f7323be6-ddbe-48e6-bc41-9986a971ad1e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tiket_lugar}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="52" width="147" height="20" uuid="5a110d6c-cd1a-4f89-ad7e-239b13827477"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Cel. 496-136-0169]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="72" width="147" height="20" uuid="5a110d6c-cd1a-4f89-ad7e-239b13827477"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Fijo: 496-965-6254]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="92" width="175" height="20" uuid="5a110d6c-cd1a-4f89-ad7e-239b13827477"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[E-mail. martin_250766@hotmail.com]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="17" y="120" width="314" height="20" uuid="8b5ce495-be16-487d-b7b4-6c7c99aa5f4c"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Atención a: "+$F{cotizaciones_cliente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="346" y="119" width="192" height="20" uuid="1953132c-cd8d-4d05-8993-991343668eb7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="33" width="236" height="28" forecolor="#006666" uuid="76bbed82-f7b0-4f36-8bfa-1199798b5075"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="33" width="78" height="28" forecolor="#006666" uuid="76bbed82-f7b0-4f36-8bfa-1199798b5075"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="33" width="112" height="28" forecolor="#006666" uuid="76bbed82-f7b0-4f36-8bfa-1199798b5075"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio Unitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="443" y="33" width="95" height="28" forecolor="#006666" uuid="c64fe9b7-0037-4e70-bea9-5f0e15a14066"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SubTotal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="17" y="0" width="237" height="24" uuid="a8444e32-c0cf-4dbd-8cb2-8fc564979008"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cotizaciones_producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="253" y="0" width="78" height="24" uuid="a8444e32-c0cf-4dbd-8cb2-8fc564979008"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cotizaciones_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="0" width="112" height="24" uuid="a8444e32-c0cf-4dbd-8cb2-8fc564979008"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{cotizaciones_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="0" width="95" height="24" uuid="4f15b749-9db2-47d8-81c6-55c2472350bf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{cotizaciones_subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="443" y="0" width="95" height="28" uuid="65839a6f-7e58-44c7-a8d7-1993d2549787"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$V{cotizaciones_subtotal_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="0" width="112" height="28" forecolor="#006666" uuid="a8142e2e-0768-4f85-94ee-4218668b3bac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="124" splitType="Stretch">
+			<staticText>
+				<reportElement x="28" y="0" width="147" height="20" forecolor="#006666" uuid="5a110d6c-cd1a-4f89-ad7e-239b13827477"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contacto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="20" width="226" height="20" forecolor="#000000" uuid="5a110d6c-cd1a-4f89-ad7e-239b13827477"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Prof. Martín Alvarez Juárez]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="50"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cf146a38-9d90-4de0-aabc-4a60613749ac">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cuenta.`fecha` AS cuenta_fecha,
+     cuenta.`monto` AS cuenta_monto,
+     cuenta.`concepto` AS cuenta_concepto,
+     cliente.`nombre` AS cliente_nombre,
+     usuario.`nombre` AS usuario_nombre,
+SUM(cuenta.`monto`) AS pendiente
+FROM
+     `cliente` cliente INNER JOIN `cuenta` cuenta ON cliente.`id` = cuenta.`cliente`
+     INNER JOIN `usuario` usuario ON cuenta.`cajero` = usuario.`id`
+WHERE cuenta.cliente = $P{id}]]>
+	</queryString>
+	<field name="cuenta_fecha" class="java.sql.Timestamp"/>
+	<field name="cuenta_monto" class="java.lang.String"/>
+	<field name="cuenta_concepto" class="java.lang.String"/>
+	<field name="cliente_nombre" class="java.lang.String"/>
+	<field name="usuario_nombre" class="java.lang.String"/>
+	<field name="pendiente" class="java.lang.Double"/>
+	<variable name="cuenta_monto_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{cuenta_monto}]]></variableExpression>
+	</variable>
+	<variable name="cuenta_monto_2" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{cuenta_monto}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d30fcc1b-56f5-4b57-9345-9070568a74ec" x="180" y="0" width="375" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado de cuenta]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1e7bd4b0-be3a-409f-8323-60a427954e50" x="180" y="33" width="375" height="58"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="b0cb62ce-5f51-439c-982a-c4e801efaed0" x="180" y="91" width="375" height="25"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="5a9c61a6-eea8-4c26-84a3-2171fa627cb6" x="0" y="0" width="180" height="116"/>
+				<imageExpression><![CDATA["C:\\Users\\Win\\Google Drive\\NetBeansProjects\\Martin\\src\\imgs\\logo_2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="63" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="4be1dccf-f713-4a86-b1d2-23faaf7cdfc4" x="0" y="41" width="555" height="20" backcolor="#CCCCCC"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="5e74ace8-9bc7-4076-b9bd-c902995355f7" x="0" y="42" width="100" height="20" backcolor="#999999"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec38b0db-5240-48ac-a87f-d01aafbb100d" x="100" y="42" width="176" height="20" backcolor="#999999"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Concepto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a9aaff91-c293-424d-ba88-90049a89b564" x="276" y="42" width="100" height="20" backcolor="#999999"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f0073c7-9725-48e7-8f65-09587df3c0ab" x="376" y="42" width="179" height="20" backcolor="#999999"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cajero]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement uuid="fd6b94cd-9016-4f23-b2b9-339bb5031722" x="0" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuenta_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="426f6fb6-f554-4a33-95fd-67a0d755a13d" x="100" y="2" width="176" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuenta_concepto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="04acefd5-efc3-4269-9624-ba7d78394cec" x="276" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["$"+$F{cuenta_monto}+"0"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6dcac99a-f9c4-4b8c-8bc0-b9d578565fd7" x="376" y="2" width="179" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{usuario_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a9aaff91-c293-424d-ba88-90049a89b564" x="218" y="9" width="158" height="26" backcolor="#999999"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo pendiente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c3067045-dbbd-4635-a5ee-a0c8670d567b" x="390" y="9" width="165" height="26"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{pendiente}+"0"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="47" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

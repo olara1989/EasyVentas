@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tiket" language="groovy" pageWidth="226" pageHeight="425" columnWidth="213" leftMargin="2" rightMargin="11" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="8179d1db-e5cc-4e22-b2dc-3c28fd76d5a1">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
+	<parameter name="departamento" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreParametro" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     articulo.`codbar` AS articulo_codbar,
+     articulo.`nombre` AS articulo_nombre,
+     articulo.`precio` AS articulo_precio,
+     articulo.`precio_mayoreo` AS articulo_precio_mayoreo,
+     proveedores.`nombre` AS proveedores_nombre,
+     tiket.`id` AS tiket_id,
+     tiket.`titulo` AS tiket_titulo,
+     tiket.`eslogan` AS tiket_eslogan,
+     tiket.`lugar` AS tiket_lugar,
+     tiket.`rfc` AS tiket_rfc,
+     tiket.`regimen` AS tiket_regimen,
+     tiket.`final` AS tiket_final,
+     tiket.`img` AS tiket_img
+FROM
+     `proveedores` proveedores INNER JOIN `articulo` articulo ON proveedores.`id` = articulo.`proveedor`,
+     `tiket` tiket
+WHERE
+     proveedores.nombre = $P{departamento}
+Order by articulo.nombre]]>
+	</queryString>
+	<field name="articulo_codbar" class="java.lang.String"/>
+	<field name="articulo_nombre" class="java.lang.String"/>
+	<field name="articulo_precio" class="java.lang.Double"/>
+	<field name="articulo_precio_mayoreo" class="java.math.BigDecimal"/>
+	<field name="proveedores_nombre" class="java.lang.String"/>
+	<field name="tiket_id" class="java.lang.Integer"/>
+	<field name="tiket_titulo" class="java.lang.String"/>
+	<field name="tiket_eslogan" class="java.lang.String"/>
+	<field name="tiket_lugar" class="java.lang.String"/>
+	<field name="tiket_rfc" class="java.lang.String"/>
+	<field name="tiket_regimen" class="java.lang.String"/>
+	<field name="tiket_final" class="java.lang.String"/>
+	<field name="tiket_img" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="111" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f7d06f90-9576-4ecb-9029-39cd0744e07a" x="14" y="50" width="199" height="11"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tiket_titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f7d06f90-9576-4ecb-9029-39cd0744e07a" x="14" y="60" width="199" height="11"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RFC: "+$F{tiket_rfc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f7d06f90-9576-4ecb-9029-39cd0744e07a" x="14" y="70" width="199" height="11"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tiket_regimen}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement uuid="f96b3553-0e51-497f-9d35-09c29057825b" x="14" y="-2" width="199" height="52"/>
+				<imageExpression><![CDATA[$F{tiket_img}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="0754bfff-6f55-47d1-882e-f2ddbc344258" x="15" y="91" width="198" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreParametro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="caa2b097-7b94-4d13-9fc5-24aa4b8b03bf" x="14" y="4" width="69" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Articulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="81628a63-a0c4-4baf-a03f-674434aec5d7" x="139" y="4" width="74" height="13"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Mayoreo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8e4aed01-193f-432a-95f8-a0a9fcc654a5" x="83" y="4" width="56" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Menudeo]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="da2daaaa-887f-48ea-a8ff-2b2efd173d84" x="14" y="0" width="199" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement uuid="97c84154-d22c-4d20-afbb-221c950e9ddd" x="15" y="0" width="68" height="13"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{articulo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="77ed2dcb-10c9-415f-ad42-1f29d131fcdf" x="83" y="1" width="56" height="12"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{articulo_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="affcee31-8385-4ec5-a635-ae6f8f41a307" x="139" y="1" width="74" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{articulo_precio_mayoreo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="49" splitType="Stretch">
+			<line>
+				<reportElement uuid="cc7f155b-2612-4bca-81da-0fcd7e106a43" x="14" y="3" width="199" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="ccfd6b48-51cc-47a0-b908-79892649c71e" x="14" y="36" width="199" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tiket_final}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2caa4a31-71e0-456d-8d71-ad5047a90109" x="15" y="16" width="198" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tel: 444-122-9468]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>
