@@ -52,6 +52,9 @@ public class Productos extends javax.swing.JDialog {
         for (String[] strings : provs) {
             departamento.addItem(new Proveedor(strings[0], strings[1], strings[2], strings[3]));
         }
+         if (Main.interfaz.tipoUsuario != 0) {
+            jTabbedPane1.setEnabledAt(2, false);
+        }
         jButton9.setVisible(false);
         actualizarTabla(jTable3, p.getAllProveedores(false));
     }

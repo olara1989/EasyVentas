@@ -22,7 +22,7 @@ public class Conexion {
         try {
 
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-           con = DriverManager.getConnection(PATH, "root", "Chirixo2013");
+           con = DriverManager.getConnection(PATH, "root", "");
             stt = con.createStatement();
         } catch (SQLException sqle) {
             errorMensaje = sqle.getMessage();
