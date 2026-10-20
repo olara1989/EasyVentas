@@ -1,9 +1,6 @@
 (function () {
   "use strict";
 
-  const FORM_ENDPOINT = "https://formsubmit.co/ajax/olara@utzac.edu.mx";
-  const CORREO = "olara@utzac.edu.mx";
-
   const hamburger = document.getElementById("hamburger");
   const menu = document.getElementById("menu");
   if (hamburger && menu) {
@@ -15,6 +12,13 @@
 
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
+
+  if (window.location.hash) {
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target) {
+      requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    }
+  }
 
   const form = document.getElementById("leadForm");
   const ok = document.getElementById("leadOk");
@@ -41,43 +45,19 @@
       btn.textContent = "Enviando…";
 
       try {
-        const res = await fetch(FORM_ENDPOINT, {
+        const res = await fetch("/api/leads", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            ...data,
-            _subject: "Nuevo lead EasyVentas",
-            _template: "table",
-            _captcha: "false",
-          }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
         });
         const json = await res.json().catch(() => ({}));
-        const success = json.success === true || json.success === "true";
-        if (!res.ok || !success) {
-          throw new Error(json.message || "No se pudo enviar");
-        }
+        if (!res.ok) throw new Error(json.error || "No se pudo enviar");
         ok.hidden = false;
         form.reset();
         ok.scrollIntoView({ behavior: "smooth", block: "center" });
       } catch (err) {
-        const texto =
-          "Nombre: " + (data.nombre || "") +
-          "\nNegocio: " + (data.negocio || "") +
-          "\nTeléfono: " + (data.telefono || "") +
-          "\nCorreo: " + (data.email || "") +
-          "\nTipo: " + (data.tipo || "") +
-          "\nMensaje: " + (data.mensaje || "");
-        const mailto =
-          "mailto:" + CORREO +
-          "?subject=" + encodeURIComponent("Nuevo lead EasyVentas") +
-          "&body=" + encodeURIComponent(texto);
-        error.innerHTML =
-          "No se pudo enviar automáticamente. " +
-          '<a href="' + mailto + '">Enviar por correo</a> o escríbenos a ' +
-          '<a href="mailto:' + CORREO + '">' + CORREO + "</a>.";
+        error.textContent =
+          "No se pudo enviar: " + err.message + ". Inténtalo de nuevo.";
         error.hidden = false;
       } finally {
         btn.disabled = false;
